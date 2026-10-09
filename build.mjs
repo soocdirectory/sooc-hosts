@@ -103,6 +103,22 @@ ${image ? `<meta property="og:image" content="${esc(image)}">\n<meta name="twitt
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ballet:opsz@16..72&family=Caveat:wght@700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>${CSS}</style>
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, '\\u003c')}</script>` : ''}
+<script>
+/* SOOC usage counts (PostHog). Same project as the app; every event tagged platform: web.
+   No session recording. Anonymous visitors stay anonymous. Public project key (made for websites). */
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+if (!window.__soocPH && !/\\/config|squarespace\\.com$/.test(location.pathname + location.hostname)) {
+  window.__soocPH = 1;
+  posthog.init('phc_us5D32xMdpSGPaCcg6aANMX5LCmZRFjWqkYon2r37WQU', {
+    api_host: 'https://us.i.posthog.com',
+    person_profiles: 'identified_only',
+    disable_session_recording: true,
+    capture_pageview: true,
+    capture_pageleave: true
+  });
+  posthog.register({ platform: 'web', site: 'host pages' });
+}
+</script>
 </head>
 <body>
 <header class="top"><div class="wrap topin">
