@@ -55,7 +55,7 @@ function buildHosts(reviews) {
     const overall = avg(rs.map((r) => r.overall_rating)) ?? 0;
     const flags = rs.filter((r) => (r.overall_rating ?? 5) <= 2 || r.recommend_queer_bipoc === 'No' || r.felt_safe === 'No').length;
     const lc = {}; rs.forEach((r) => { const l = (r.location || '').trim(); if (l.length > 3) lc[l] = (lc[l] || 0) + 1; });
-    const ps = rs.map((r) => r.price_usd).filter((x) => x != null && x > 0).sort((a, b) => a - b);
+    const ps = rs.map((r) => r.price_usd).filter((x) => x != null && x >= 50).sort((a, b) => a - b);
     const withPh = rs.filter((r) => r.review_photos?.length).sort((a, b) => (b.overall_rating ?? 0) - (a.overall_rating ?? 0) || (a.submitted_at < b.submitted_at ? 1 : -1));
     const ph = withPh[0]?.review_photos.slice().sort((a, b) => a.idx - b.idx)[0];
     const host = rs[0].hosts || {};
@@ -140,7 +140,7 @@ function hostPage(h) {
     return `<article class="rev ${tone(r)}">
   <div class="revtop">${r.overall_rating != null ? stars(r.overall_rating) + `<b>${r.overall_rating.toFixed(1)}</b>` : ''}<span class="muted">${monthYear(r.submitted_at)}</span></div>
   ${r.event_name ? `<h3>${esc(r.event_name)}</h3>` : ''}
-  <p class="label">${esc(who)}${r.role ? ' | ' + esc(r.role) : ''}${r.price_usd ? ' | paid ' + money(r.price_usd) : ''}</p>
+  <p class="label">${esc(who)}${r.role ? ' | ' + esc(r.role) : ''}${r.price_usd >= 50 ? ' | paid ' + money(r.price_usd) : ''}</p>
   <div class="tags">${tags}</div>
   ${r.in_their_words ? `<div class="words">${para(r.in_their_words)}</div>` : ''}
   ${meaningful(r.what_happened) ? `<p class="label sub">What happened</p><div class="words">${para(r.what_happened)}</div>` : ''}
